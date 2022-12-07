@@ -1,11 +1,27 @@
 import React from "react";
 import styled from "styled-components";
 
-const Card = () => {
+const Card = ({className, title, subtitle, icon, text, img}) => {
   return (
-    <Wrapper>
+    <Wrapper className={className ? `${className}` : ''}>
         <div className="card container">
-            Card
+          <div className="card-title">
+            <h4>{title}</h4>
+          </div>
+          {subtitle ? (
+            <div className="card-subtitle">
+              <h6>{subtitle}</h6>
+            </div> 
+          ) : (
+            <div className="card-icon">{icon}</div>
+          )}
+          {text ? (
+            <div className="card-text">
+              <p>{text}</p>
+            </div> 
+          ) : (
+            <img className="card-img" src={img} alt={title} />
+          )}
         </div>
     </Wrapper>
   );
