@@ -5,8 +5,11 @@ import Lottie from "react-lottie";
 import animationData from "../assets/animation/drink-animation.json";
 import { Link } from "react-router-dom";
 import { useGlobalContext } from "../context";
+import useTitle from "../useTitle";
 
 const HomeScreen = () => {
+
+  useTitle('Home')
   
   const {query, isLoading, isError, data, count, searchCocktail, deleteScrollPosition, scrollPosition} = useGlobalContext()
   const [input, setInput] = useState(query)
