@@ -8,13 +8,21 @@ import { useGlobalContext } from "../context";
 
 const HomeScreen = () => {
   
-  const {query, isLoading, isError, data, count, searchCocktail} = useGlobalContext()
+  const {query, isLoading, isError, data, count, searchCocktail, deleteScrollPosition, scrollPosition} = useGlobalContext()
   const [input, setInput] = useState(query)
 
   const handleSubmit = (e) => {
     e.preventDefault();
     searchCocktail(input)
   }
+
+  useEffect(() => {
+    if(scrollPosition) {
+      window.scrollTo(0, scrollPosition)
+      deleteScrollPosition()
+    } 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <>
