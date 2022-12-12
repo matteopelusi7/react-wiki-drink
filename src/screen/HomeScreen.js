@@ -4,10 +4,17 @@ import { FaSearch } from "react-icons/fa";
 import Lottie from "react-lottie";
 import animationData from "../assets/animation/drink-animation.json";
 import { Link } from "react-router-dom";
+import { useGlobalContext } from "../context";
 
 const HomeScreen = () => {
+  
+  const {query, isLoading, isError, data, count, searchCocktail} = useGlobalContext()
+  const [input, setInput] = useState(query)
 
-  const [input, setInput] = useState('negroni')
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    searchCocktail(input)
+  }
 
   return (
     <>
@@ -42,7 +49,7 @@ const HomeScreen = () => {
       <section className="container home-screen">
         <div className="search-bar">
           <div className="form-container">
-            <form>
+            <form onSubmit={handleSubmit}>
               <label htmlFor="drink">
                 <h4>Cerca il tuo drink</h4>
               </label>
@@ -50,7 +57,7 @@ const HomeScreen = () => {
                 <input 
                   id="drink" 
                   className="input" 
-                  placeholder={input} 
+                  placeholder={query} 
                   value={input} 
                   onChange={(e)=> setInput(e.target.value)} 
                 />
@@ -60,8 +67,15 @@ const HomeScreen = () => {
               </div>
             </form>
           </div>
-          <p className="result">3 risultati</p>
+          <p className="result">{count} risultati</p>
         </div>
+        {!isLoading && isError ? ( 
+          <ErrorMessage>Nessaun Cocktail trovato</ErrorMessage>
+        ) : !isLoading && !isError ? (
+          <Cocktails data={data.drinks} />
+        ) : (
+          <Loading />
+        )}
       </section>
     </>
   );

@@ -1,10 +1,18 @@
 import {useState, useContext, createContext} from "react"
+import useFetch from "./useFetch"
 
 const AppContext = createContext()
 
 const AppProvider = ({children}) => {
 
     const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+    const [query, setQuery] = useState('negroni')
+
+    const {data, isLoading, isError, count} = useFetch(`s=${query}`)
+
+    const searchCocktail = (input) => {
+        setQuery(input)
+    }
 
     const openSidebar = () => {
         setIsSidebarOpen(true)
@@ -18,7 +26,13 @@ const AppProvider = ({children}) => {
         <AppContext.Provider value={{
             isSidebarOpen,
             openSidebar,
-            closeSidebar
+            closeSidebar,
+            query,
+            isLoading,
+            isError,
+            data,
+            count,
+            searchCocktail
         }}>
             {children}
         </AppContext.Provider>
