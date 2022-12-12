@@ -5,7 +5,9 @@ import styled from "styled-components";
 const Cocktails = ({ data }) => {
   return(
     <Wrapper>
-        Cockail List
+      {data.map((cocktail) => {
+        return <Cocktail key={cocktail.idDrink} {...cocktail} />
+      })}
     </Wrapper>
   );
 };
